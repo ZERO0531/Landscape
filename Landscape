@@ -1,0 +1,70 @@
+import pygame
+import sys
+import random
+
+# Initialize Pygame
+pygame.init()
+
+# Set up colours 
+BACKGROUND_COLOUR = (3, 5, 91) #Dark blue 
+FIREFLY_COLOUR = (255, 255, 0) #Yellow
+GRASS_COLOR = (0, 128, 0) # Green
+
+# Create game window
+WIDTH, HEIGHT = 800, 650
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+
+# Set up firefly
+NUM_FIREFLY = 50
+firefly = []
+for _ in range(NUM_FIREFLY):
+    x = random.randint(0, WIDTH)
+    y = random.randint(0, HEIGHT)
+    radius = random.randint(4, 4)
+    firefly.append((x, y, radius))
+    speed = random.randint(5, 5)
+
+# Set up grass 
+NUM_GRASS = 888
+grass = []
+for _ in range(NUM_GRASS):
+    x = random.randint(0, WIDTH)
+    y = random.randint(HEIGHT - 100, HEIGHT)
+    width = random.randint(20, 40)
+    height = random.randint(50, 100)
+    grass.append((x, y, width, height))
+
+# Loop 
+def new_func(x, y, radius, screen):
+    new_var = pygame.draw.circle(screen, (255, 255, 0), (x, y), radius)
+    return new_var
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+
+
+    # Fill screen with dark blue
+    screen.fill((3, 5, 99)) #Dark blue
+
+
+    # Draw grass 
+    for x, y, width, height in grass:
+        pygame.draw.polygon(screen, GRASS_COLOR, [(x, y), (x + width, y), (x + width / 2, y - height)])
+
+    # Draw and move firefly
+    for i, (x, y, radius) in enumerate(firefly):
+        new_var = new_func(x, y, radius, screen)
+        new_var
+        x += speed
+        if x > WIDTH:
+            x = -radius
+        firefly[i] = (x, y, radius)
+    
+
+    # Update display
+    pygame.display.flip()
+
+    # Cap frame rate
+    pygame.time.Clock().tick(60)
