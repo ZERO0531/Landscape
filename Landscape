@@ -13,6 +13,7 @@ GRASS_COLOR = (0, 128, 0) # Green
 # Create game window
 WIDTH, HEIGHT = 800, 650
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
+clock = pygame.time.Clock()
 
 # Set up firefly
 NUM_FIREFLY = 50
@@ -29,9 +30,9 @@ NUM_GRASS = 888
 grass = []
 for _ in range(NUM_GRASS):
     x = random.randint(0, WIDTH)
-    y = random.randint(HEIGHT - 100, HEIGHT)
+    y = random.randint(HEIGHT - 10, HEIGHT)
     width = random.randint(20, 40)
-    height = random.randint(50, 100)
+    height = random.randint(80, 240)
     grass.append((x, y, width, height))
 
 # Loop 
@@ -65,6 +66,10 @@ while True:
 
     # Update display
     pygame.display.flip()
+
+    # Cap frame rate
+    clock.tick(30)
+
 
     # Cap frame rate
     pygame.time.Clock().tick(60)
